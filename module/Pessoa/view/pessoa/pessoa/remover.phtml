@@ -1,0 +1,16 @@
+<?php
+
+$title = "Remover pessoa";
+$this->headTitle($title);
+?>
+<h1><?=$this->escapeHtml($title)?></h1>
+<p>
+    Você deseja realmente exlcuir "<?=$this->escapeHtml($pessoa->getNome())?>"?
+</p>
+<form method="post" action="<?=$this->url('pessoa', ['action' => 'remover', 'id' => $id])?>">
+    <div class="form-group">
+        <input type="hidden" name="id" value="<?=$this->id?>">
+        <input type="submit" name="del" value="Sim" class="btn btn-danger">
+        <input type="submit" name="del" value="Não" class="btn btn-success">
+    </div>
+</form>

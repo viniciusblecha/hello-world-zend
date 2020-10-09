@@ -1,0 +1,48 @@
+<?php
+    $pessoas;
+?>
+
+<h1>Lista de pessoas</h1>
+<a href="<?=$this->url('pessoa', ['action' => 'adicionar'])?>" class="btn btn-success">Adicionar Pessoa</a>
+<table class="table table-stripped">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Sobrenome</th>
+        <th>Email</th>
+        <th>Situação</th>
+    </tr>
+
+<?php 
+    foreach ($this->paginator as $pes) :
+    ?>
+        <tr>
+            <td><?=$pes->getId()?></td>
+            <td><?=$pes->getNome()?></td>
+            <td><?=$pes->getSobrenome()?></td>
+            <td><?=$pes->getEmail()?></td>
+            <td><?=$pes->getSituacao()?></td>
+            <td>
+                <a href="<?=$this->url('pessoa', ['action' => 'editar', 'id' => $pes->getId()])?>" class="btn btn-info">
+                    Editar 
+                </a>
+                <a href="<?=$this->url('pessoa', ['action' => 'remover', 'id' => $pes->getId()])?>" class="btn btn-danger">
+                    Remover
+                </a>
+            </td>
+        </tr>
+    <?php 
+    endforeach;
+?>
+</table>
+
+<?= $this->paginationControl(
+    // The paginator object:
+    $this->paginator,
+    // The scrolling style:
+    'sliding',
+    // The partial to use to render the control:
+    'partial/paginator',
+    // The route to link to when a user clicks a control link:
+    ['route' => 'pessoa']
+) ?>

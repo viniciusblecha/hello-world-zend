@@ -1,0 +1,60 @@
+version: '3.5'
+
+services:
+  zend:
+    build:
+      context: .
+      dockerfile: docker/php7.4/Dockerfile
+    container_name: zend    
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - zend 
+  
+  #DB MARIADB
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=zend
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    command: --sql_mode=NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+    volumes:
+      - mariadb_data:/mariadb
+    ports:
+      - 3306:3306
+    networks:
+      - zend
+  
+  #PHPMYADMIN
+  phpmyadmin:
+    build:
+      context: .
+      dockerfile: docker/phpmyadmin/Dockerfile
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    ports:
+      - 8088:80
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - PMA_HOST=mariadb
+    networks:
+      - zend
+
+volumes:
+  mariadb_data:
+    driver: local
+    
+networks:
+  zend:
+    name: zend
