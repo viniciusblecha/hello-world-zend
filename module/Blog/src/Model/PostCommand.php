@@ -48,10 +48,45 @@ class PostCommand implements PostCommandInterface
 
     public function updatePost(Post $post)
     {
+        if (! $post->getId()) {
+            throw new RuntimeException('Cannot update post; missing identifier');
+        }
 
+        $update = new Update('posts');
+        $update->set([
+            'title' => $post->getTitle(),
+            'text' => $post->getText(),
+        ]);
+        $update->where(['id = ?' => $post->getId()]);
+        
+        $sql = new Sql($this->db);
+        $stmt = $sql->prepareStatementForSqlObject($update);
+        $result =  $stmt->execute();
+
+        if (! $result instanceof ResultInterface) {
+            throw new RuntimeException('Database error ocurre during blog post update operation');
+        }
+
+        return $post;
     }
+
     public function deletePost(Post $post)
     {
+        if (! $post->getId()) {
+            throw new RuntimeException('Cannot update post; missing identifier');
+        }
 
+        $delete = new Delete('posts');
+        $delete->where(['id = ?' => $post->getId()]);
+
+        $sql = new Sql($this->db);
+        $stmt = $sql->prepareStatementForSqlObject($delete);
+        $result = $stmt->execute();
+
+        if (! $result instanceof ResultInterface) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,21 +1,20 @@
 <?php
+
 namespace Blog\Factory;
 
-use Blog\Model\PostRepositoryInterface;
-use Blog\Controller\WriteController;
-use Blog\Form\PostForm;
+use Blog\Controller\DeleteController;
 use Blog\Model\PostCommandInterface;
+use Blog\Model\PostRepositoryInterface;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class WriteControllerFactory implements FactoryInterface
+class DeleteControllerFactory implements FactoryInterface
 {
+
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $formManager = $container->get('FormElementManager');
-        return new WriteController(
+        return new DeleteController(
             $container->get(PostCommandInterface::class),
-            $formManager->get(PostForm::class),
             $container->get(PostRepositoryInterface::class)
         );
     }

@@ -5,7 +5,7 @@ $this->headTitle($title);
 ?>
 <h1><?=$this->escapeHtml($title)?></h1>
 <p>
-    Você deseja realmente exlcuir "<?=$this->escapeHtml($pessoa->getNome())?>"?
+    Você deseja realmente excluir "<?=$this->escapeHtml($pessoa->getNome())?>"?
 </p>
 <form method="post" action="<?=$this->url('pessoa', ['action' => 'remover', 'id' => $id])?>">
     <div class="form-group">
