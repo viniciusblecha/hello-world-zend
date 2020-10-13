@@ -23,4 +23,5 @@ return [
     'Zend\Db',
     'Application',
     'Pessoa',
+    'Blog',
 ];
