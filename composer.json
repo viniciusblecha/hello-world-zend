@@ -29,8 +29,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ApplicationTest\\": "module/Application/test/",
-            "PessoaTest\\": "module/Pessoa/test/"
+            "PessoaTest\\": "module/Pessoa/test/",
+            "BlogTest\\": "module/Blog/test/"
         }
     },
     "scripts": {
@@ -45,5 +45,8 @@
         ],
         "serve": "php -S 0.0.0.0:8080 -t public",
         "test": "phpunit"
+    },
+    "require-dev": {
+        "zendframework/zend-test": "^3.3"
     }
 }
